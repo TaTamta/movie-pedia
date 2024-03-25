@@ -26,9 +26,9 @@ export const UserContext = createContext<UserInfo | null>(null);
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
-      <Route index path="/home" element={<HomePage />} />
-      <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/login" element={<AuthorizationPage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route index path="/favorites" element={<FavoritesPage />} />
       <Route path="/movie">
         <Route path=":movieId" element={<MovieDetailsPage />} />
       </Route>

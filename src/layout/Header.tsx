@@ -23,7 +23,7 @@ export default function Header() {
           <div className={styles.headerLeftPart}>
             <Link className={styles.logoPart} to="/home">
               <img className={styles.logo} src={logo} alt="logo" />
-              <div className={styles.name}>MOVIE PEDIA</div>
+              <div className={styles.name}>MOVIEPEDIA</div>
             </Link>
           </div>
           {!context?.isLoggedIn ? null : (
