@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
+import { Navigate } from 'react-router-dom';
 
 export default function FavoritesPage() {
-  return (
-    <div>
-      FAVORITES
-    </div>
-  )
+  const context = useContext(UserContext);
+
+  if (!context?.isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+  return <div>FAVORITES</div>;
 }

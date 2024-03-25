@@ -1,0 +1,26 @@
+.inputWrapper {
+    position: relative;
+  }
+  
+  .input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    outline: none;
+  }
+  
+  .active .input {
+    border-color: #007bff;
+  }
+  
+  .toggleButton {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  

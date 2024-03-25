@@ -1,4 +1,6 @@
-import React from 'react';
+// App.js
+
+import React, { createContext, useState, useEffect } from 'react';
 import './App.css';
 import {
   Route,
@@ -12,11 +14,20 @@ import MovieDetailsPage from './pages/MovieDetailsPage';
 import AuthorizationPage from './pages/AuthorizationPage';
 import { RouterProvider } from 'react-router';
 
+type UserInfo = {
+  isLoggedIn: boolean;
+  user: string | null; // User interface for user information
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setUser: React.Dispatch<React.SetStateAction<string | null>>;
+};
+
+export const UserContext = createContext<UserInfo | null>(null);
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index path="/home" element={<HomePage />} />
-      <Route path="/favourites" element={<FavoritesPage />} />
+      <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/login" element={<AuthorizationPage />} />
       <Route path="/movie">
         <Route path=":movieId" element={<MovieDetailsPage />} />
@@ -26,5 +37,21 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const username = sessionStorage.getItem('username');
+    if (token) {
+      setUser(username);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ isLoggedIn, user, setIsLoggedIn, setUser }}>
+      <RouterProvider router={router} />
+    </UserContext.Provider>
+  );
 }

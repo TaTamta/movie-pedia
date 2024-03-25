@@ -1,20 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './Header.module.css';
+import logo from '../assets/tv.svg';
+import { UserContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
+
+  function handleLogOut() {
+    sessionStorage.removeItem('token');
+    context?.setIsLoggedIn(false);
+    context?.setUser(null);
+    navigate('/login');
+  }
+
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/home">MAIN PAGE</Link>
-        </li>
-        <li>
-          <Link to="/favourites">FAVORITES</Link>
-        </li>
-        <li>
-          <Link to="/login">LOGIN</Link>
-        </li>
-      </ul>
-    </div>
+    <section className={styles.header}>
+      <div className={styles.container}>
+        <header className={styles.headerItems}>
+          <div className={styles.headerLeftPart}>
+            <Link className={styles.logoPart} to="/home">
+              <img className={styles.logo} src={logo} alt="logo" />
+              <div className={styles.name}>MOVIE PEDIA</div>
+            </Link>
+          </div>
+          {!context?.isLoggedIn ? null : (
+            <nav className={styles.menu}>
+              <ul className={styles.menuList}>
+                <li>
+                  <Link to="/home">HOME</Link>
+                </li>
+                <li>
+                  <Link to="/favorites">
+                    {context?.user?.toUpperCase()}'S FAVORITES
+                  </Link>
+                </li>
+                <li onClick={handleLogOut}>
+                  <Link to="/login">LOG OUT</Link>
+                </li>
+              </ul>
+            </nav>
+          )}
+        </header>
+      </div>
+    </section>
   );
 }
