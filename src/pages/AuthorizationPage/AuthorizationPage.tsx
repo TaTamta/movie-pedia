@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import Input from '../components/forrm-elements/Input/Input';
-import Button from '../components/forrm-elements/Button/Button';
+import Input from '../../components/forrm-elements/Input/Input';
+import Button from '../../components/forrm-elements/Button/Button';
 import styles from './Authorization.module.css';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { UserContext } from '../App';
+import { UserContext } from '../../App';
 
 export default function AuthorizationPage() {
   const context = useContext(UserContext);

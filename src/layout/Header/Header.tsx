@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
-import logo from '../assets/tv.svg';
-import { UserContext } from '../App';
+import logo from '../../assets/tv.svg';
+import { UserContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 
 export default function Header() {

@@ -1,0 +1,17 @@
+.moviesContainer {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.moviesList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  max-width: 1200px;
+  row-gap: 24px;
+}
