@@ -7,7 +7,7 @@ import MovieCard from '../../components/cards/MovieCard';
 import Button from '../../components/forrm-elements/Button/Button';
 import ConfirmationModal from '../../components/modal/ConfirmationModal';
 
-const FavoritesPage: React.FC = () => {
+export default function FavoritesPage() {
   const context = useContext(UserContext);
 
   const [favorites, setFavorites] = useState<MovieDetails[]>(
@@ -68,5 +68,3 @@ const FavoritesPage: React.FC = () => {
     </div>
   );
 };
-
-export default FavoritesPage;
