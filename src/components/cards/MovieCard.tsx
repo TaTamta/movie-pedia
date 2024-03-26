@@ -1,15 +1,14 @@
 import React from 'react';
 import styles from './MovieCard.module.css';
-import { Movie } from '../../utils/types';
+import { Movie, MovieDetails } from '../../utils/types';
 import { posterBaseUrl } from '../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  movieData: Movie;
-  onCardClick: () => void; // Add onCardClick function
+  movieData: Movie | MovieDetails;
 }
 
-export default function MovieCard({ movieData, onCardClick }: Props) {
+export default function MovieCard({ movieData }: Props) {
   const navigate = useNavigate();
 
   const handleClick = () => {

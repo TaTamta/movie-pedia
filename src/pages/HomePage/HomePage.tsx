@@ -62,10 +62,6 @@ export default function HomePage() {
     navigate('/');
   };
 
-  const handleCardClick = (id: number) => {
-    navigate(`/movie/${id}`);
-  };
-
   if (!context?.isLoggedIn) {
     return <Navigate to="/login" />;
   }
@@ -82,13 +78,7 @@ export default function HomePage() {
         ) : moviesToRender.length > 0 ? (
           moviesToRender
             .slice(0, page * PAGE_SIZE)
-            .map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movieData={movie}
-                onCardClick={() => handleCardClick(movie.id)}
-              />
-            ))
+            .map((movie) => <MovieCard key={movie.id} movieData={movie} />)
         ) : (
           <p>No movies found</p>
         )}

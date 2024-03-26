@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../../App';
 import { Navigate } from 'react-router-dom';
-import { posterBaseUrl } from '../../utils/constants';
 import { MovieDetails } from '../../utils/types';
 import styles from './FavoritesPage.module.css';
+import MovieCard from '../../components/cards/MovieCard';
+import Button from '../../components/forrm-elements/Button/Button';
+import ConfirmationModal from '../../components/modal/ConfirmationModal';
 
-export default function FavoritesPage() {
+const FavoritesPage: React.FC = () => {
   const context = useContext(UserContext);
 
   const [favorites, setFavorites] = useState<MovieDetails[]>(
@@ -18,17 +20,7 @@ export default function FavoritesPage() {
     const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
     localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
     setFavorites(updatedFavorites);
-  };
-
-  const handleConfirmRemove = () => {
-    if (selectedMovie) {
-      handleRemoveFromFavorites(selectedMovie);
-      setModalOpen(false);
-    }
-  };
-
-  const handleRejectRemove = () => {
-    setModalOpen(false);
+    setModalOpen(false); // Close modal after removal
   };
 
   const openModal = (movie: MovieDetails) => {
@@ -43,38 +35,38 @@ export default function FavoritesPage() {
   if (!context?.isLoggedIn) {
     return <Navigate to="/login" />;
   }
+
   return (
-    <div className={styles.container}>
-      <h1>Favorites</h1>
-      <div className={styles.movieGrid}>
-        {favorites.map((movie) => (
-          <div key={movie.id} className={styles.movieCard}>
-            <img
-              src={posterBaseUrl + movie.poster_path}
-              alt={movie.title}
-              className={styles.poster}
-            />
-            <div className={styles.details}>
-              <h2 className={styles.title}>{movie.title}</h2>
-              <button onClick={() => openModal(movie)}>Remove</button>
+    <div className={styles.favoritesContainer}>
+      <div className={styles.favoritesContent}>
+        <h1 className={styles.title}>Favorites</h1>
+        {favorites.length === 0 && (
+          <p className={styles.message}>You have no favorite movies yet.</p>
+        )}
+        <div className={styles.moviesList}>
+          {favorites.map((movie) => (
+            <div key={movie.id} className={styles.card}>
+              <MovieCard movieData={movie} />
+              <Button
+                type="primary"
+                text="Remove from favorites"
+                onClick={() => openModal(movie)}
+                disabled={false}
+              />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Confirmation Modal */}
       {modalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <p>Are you sure you want to remove this movie from favorites?</p>
-            <div>
-              <button onClick={handleConfirmRemove}>Yes</button>
-              <button onClick={handleRejectRemove}>No</button>
-            </div>
-          </div>
-          <div className={styles.modalBackground} onClick={closeModal}></div>
-        </div>
+        <ConfirmationModal
+          message="Are you sure you want to remove this movie from favorites?"
+          onConfirm={() => handleRemoveFromFavorites(selectedMovie!)}
+          onCancel={closeModal}
+        />
       )}
     </div>
   );
-}
+};
+
+export default FavoritesPage;
