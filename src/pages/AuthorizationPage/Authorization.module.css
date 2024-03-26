@@ -20,4 +20,10 @@
   color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+Button {
+  position: absolute;
+  bottom: 24px;
 }

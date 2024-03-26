@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Input from '../../components/forrm-elements/Input/Input';
 import Button from '../../components/forrm-elements/Button/Button';
 import styles from './Authorization.module.css';
@@ -11,9 +11,18 @@ export default function AuthorizationPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    setIsButtonDisabled(!username || !password);
+  }, [username, password]);
+
+  useEffect(() => {
+    setError('');
+  }, [username, password]);
 
   function handleLogin() {
-    if (username === 'user' && password === 'password') {
+    if (username === 'tamta' && password === 'tamta') {
       const token = 'dummy_token';
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('username', username);
@@ -28,6 +37,7 @@ export default function AuthorizationPage() {
   if (context?.isLoggedIn) {
     return <Navigate to="/home" />;
   }
+
   return (
     <div className={styles.authorization}>
       <div className={styles.authorizationContainer}>
@@ -45,7 +55,12 @@ export default function AuthorizationPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <Button type="primary" text="Login" onClick={handleLogin} />
+        <Button
+          type="primary"
+          text="Login"
+          onClick={handleLogin}
+          disabled={isButtonDisabled}
+        />
       </div>
     </div>
   );
