@@ -56,6 +56,7 @@ export default function AuthorizationPage() {
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <Button
+          className={styles.button}
           type="primary"
           text="Login"
           onClick={handleLogin}

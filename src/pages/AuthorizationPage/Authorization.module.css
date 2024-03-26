@@ -23,7 +23,7 @@
   position: relative;
 }
 
-Button {
+.button {
   position: absolute;
   bottom: 24px;
 }

@@ -9,15 +9,17 @@ interface ButtonProps {
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
   disabled?: boolean;
+  className?: string; // Add className prop
 }
 
-export default function Button({
+const Button: React.FC<ButtonProps> = ({
   type,
   text,
   icon,
   onClick,
   disabled,
-}: ButtonProps) {
+  className,
+}) => {
   const buttonClass =
     type === 'primary'
       ? styles.primary
@@ -27,12 +29,14 @@ export default function Button({
 
   return (
     <button
-      className={`${styles.button} ${buttonClass}`}
+      className={`${styles.button} ${buttonClass} ${className}`} // Add className here
       onClick={onClick}
-      disabled={disabled} // Apply disabled attribute
+      disabled={disabled}
     >
       {type !== 'icon' && text}
       {type === 'icon' && icon}
     </button>
   );
-}
+};
+
+export default Button;
