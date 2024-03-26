@@ -20,7 +20,7 @@ export default function FavoritesPage() {
     const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
     localStorage.setItem('favoriteMovies', JSON.stringify(updatedFavorites));
     setFavorites(updatedFavorites);
-    setModalOpen(false); // Close modal after removal
+    setModalOpen(false);
   };
 
   const openModal = (movie: MovieDetails) => {
