@@ -12,7 +12,7 @@ import MovieDetailsPage from './pages/MovieDetailsPage/MovieDetailsPage';
 import AuthorizationPage from './pages/AuthorizationPage/AuthorizationPage';
 import { RouterProvider } from 'react-router';
 import { apiCall } from './utils/apiCall';
-import { UserInfo, MoviesResponse } from './utils/types';
+import { UserInfo, MoviesResponse, movieDetails } from './utils/types';
 
 export const UserContext = createContext<UserInfo | null>(null);
 
@@ -40,15 +40,36 @@ async function loadMovies(
   }
 }
 
+async function loadSingleMovie(id: number): Promise<movieDetails> {
+  const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+
+  try {
+    const movieDetailsData = await apiCall<movieDetails>(url);
+    console.log(movieDetailsData);
+    return movieDetailsData;
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+    throw error;
+  }
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<HomePage />} />
       <Route path="login" element={<AuthorizationPage />} />
-      <Route path="home" element={<HomePage />} loader={() => loadMovies(1, 2)} />
+      <Route
+        path="home"
+        element={<HomePage />}
+        loader={() => loadMovies(1, 2)}
+      />
       <Route path="favorites" element={<FavoritesPage />} />
       <Route path="movie">
-        <Route path=":movieId" element={<MovieDetailsPage />} />
+        <Route
+          path=":movieId"
+          element={<MovieDetailsPage />}
+          loader={({ params }) => loadSingleMovie(Number(params.movieId))}
+        />
       </Route>
     </Route>
   )

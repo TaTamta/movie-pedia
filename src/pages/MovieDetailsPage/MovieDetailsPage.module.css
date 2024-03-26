@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .poster {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .details {
+    flex-grow: 1;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .overview {
+    margin-bottom: 20px;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .voteAverage {
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  
+  .additionalDetails {
+    margin-top: 30px;
+  }
+  
+  .additionalDetails p {
+    margin-bottom: 10px;
+  }
+  
