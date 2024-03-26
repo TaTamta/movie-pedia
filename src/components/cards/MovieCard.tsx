@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './MovieCard.module.css';
 import { Movie } from '../../utils/types';
-import { posterBaseUrl } from '../../utils/contants';
+import { posterBaseUrl } from '../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {

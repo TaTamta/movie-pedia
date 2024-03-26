@@ -12,7 +12,7 @@ import MovieDetailsPage from './pages/MovieDetailsPage/MovieDetailsPage';
 import AuthorizationPage from './pages/AuthorizationPage/AuthorizationPage';
 import { RouterProvider } from 'react-router';
 import { apiCall } from './utils/apiCall';
-import { UserInfo, MoviesResponse, movieDetails } from './utils/types';
+import { UserInfo, MoviesResponse, MovieDetails } from './utils/types';
 
 export const UserContext = createContext<UserInfo | null>(null);
 
@@ -40,12 +40,11 @@ async function loadMovies(
   }
 }
 
-async function loadSingleMovie(id: number): Promise<movieDetails> {
+async function loadSingleMovie(id: number): Promise<MovieDetails> {
   const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
 
   try {
-    const movieDetailsData = await apiCall<movieDetails>(url);
-    console.log(movieDetailsData);
+    const movieDetailsData = await apiCall<MovieDetails>(url);
     return movieDetailsData;
   } catch (error) {
     console.error('Error fetching movie details:', error);

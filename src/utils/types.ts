@@ -27,7 +27,7 @@ export interface MoviesResponse {
   results: Movie[];
 }
 
-export interface movieDetails {
+export interface MovieDetails {
   adult: false;
   backdrop_path: '/zAepSrO99owYwQqi0QG2AS0dHXw.jpg';
   belongs_to_collection: null;

@@ -1,4 +1,4 @@
-import { apiToken } from './contants';
+import { apiToken } from './constants';
 
 export async function apiCall<T>(
   url: string,
