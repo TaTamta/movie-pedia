@@ -1,0 +1,30 @@
+.details {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.overview {
+  margin-bottom: 10px;
+}
+
+.rating {
+  margin-bottom: 10px;
+}
+
+.favoriteButton {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .details {
+    align-items: center;
+  }
+}

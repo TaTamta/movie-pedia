@@ -6,6 +6,7 @@ import { Movie, MoviesResponse } from '../../utils/types';
 import MovieCard from '../../components/cards/MovieCard';
 import Search from '../../components/search/Search';
 import styles from './HomePage.module.css';
+import Button from '../../components/forrm-elements/Button/Button';
 
 const PAGE_SIZE = 12;
 
@@ -85,7 +86,11 @@ export default function HomePage() {
       </div>
 
       {moviesToRender.length > page * PAGE_SIZE && (
-        <button onClick={() => setPage(page + 1)}>Load more</button>
+        <Button
+          type="primary"
+          onClick={() => setPage(page + 1)}
+          text={'Load more'}
+        />
       )}
     </div>
   );

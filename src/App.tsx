@@ -24,13 +24,11 @@ async function loadMovies(
   const url2 = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page2}&sort_by=popularity.desc`;
 
   try {
-    // Make API calls for both pages concurrently using Promise.all
     const [moviesData1, moviesData2] = await Promise.all([
       apiCall<MoviesResponse>(url1),
       apiCall<MoviesResponse>(url2),
     ]);
 
-    // Combine the results from both pages
     const combinedResults = [...moviesData1.results, ...moviesData2.results];
 
     return combinedResults;

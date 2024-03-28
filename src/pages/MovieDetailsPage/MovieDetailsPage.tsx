@@ -1,3 +1,4 @@
+// MovieDetailsPage.js
 import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, useLoaderData } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -5,7 +6,9 @@ import styles from './MovieDetailsPage.module.css';
 import { MovieDetails } from '../../utils/types';
 import { posterBaseUrl } from '../../utils/constants';
 import RatingChart from '../../components/charts/RatingChart';
-import Button from '../../components/forrm-elements/Button/Button';
+import MoviePoster from '../../components/details/MoviePoster';
+import MovieHeader from '../../components/details/MovieHeader';
+import MovieDetailsList from '../../components/details/MovieDetailsList';
 
 export default function MovieDetailsPage() {
   const context = useContext(UserContext);
@@ -52,68 +55,54 @@ export default function MovieDetailsPage() {
     return <p>Loading...</p>;
   }
 
+  const additionalDetails = [
+    { title: 'Release Date', description: movieData.release_date },
+    {
+      title: 'Genres',
+      description: movieData.genres.map((genre) => genre.name).join(', '),
+    },
+    { title: 'Runtime', description: `${movieData.runtime} minutes` },
+    {
+      title: 'Production Companies',
+      description: movieData.production_companies
+        .map((company) => company.name)
+        .join(', '),
+    },
+    {
+      title: 'Production Countries',
+      description: movieData.production_countries
+        .map((country) => country.name)
+        .join(', '),
+    },
+    { title: 'Tagline', description: movieData.tagline },
+    { title: 'IMDb ID', description: movieData.imdb_id },
+    {
+      title: 'Homepage',
+      description: (
+        <a href={movieData.homepage} target="_blank" rel="noopener noreferrer">
+          {movieData.homepage}
+        </a>
+      ),
+    },
+  ];
+
   return (
     <div className={styles.detailsPage}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <img
-            src={posterBaseUrl + movieData.poster_path}
-            alt={movieData.title}
-            className={styles.poster}
+          <MoviePoster
+            posterPath={posterBaseUrl + movieData.poster_path}
+            title={movieData.title}
           />
-          <div className={styles.details}>
-            <h2 className={styles.title}>{movieData.title}</h2>
-            <p className={styles.overview}>{movieData.overview}</p>
-            <div className={styles.rating}>
-              <RatingChart rating={movieData.vote_average} />
-            </div>
-            <Button
-              type="primary"
-              onClick={handleToggleFavorites}
-              text={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            />
-          </div>
+          <MovieHeader
+            title={movieData.title}
+            overview={movieData.overview}
+            rating={<RatingChart rating={movieData.vote_average} />}
+            handleToggleFavorites={handleToggleFavorites}
+            isFavorite={isFavorite}
+          />
         </div>
-        <div className={styles.additionalDetails}>
-          <p>
-            <strong>Release Date:</strong> {movieData.release_date}
-          </p>
-          <p>
-            <strong>Genres:</strong>{' '}
-            {movieData.genres.map((genre) => genre.name).join(', ')}
-          </p>
-          <p>
-            <strong>Runtime:</strong> {movieData.runtime} minutes
-          </p>
-          <p>
-            <strong>Production Companies:</strong>{' '}
-            {movieData.production_companies
-              .map((company) => company.name)
-              .join(', ')}
-          </p>
-          <p>
-            <strong>Production Countries:</strong>{' '}
-            {movieData.production_countries
-              .map((country) => country.name)
-              .join(', ')}
-          </p>
-          <p>
-            <strong>Tagline:</strong> {movieData.tagline}
-          </p>
-          <p>
-            <strong>IMDb ID:</strong> {movieData.imdb_id}
-          </p>
-          <p>
-            <strong>Homepage:</strong>{' '}
-            <a
-              href={movieData.homepage}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {movieData.homepage}
-            </a>
-          </p>
-        </div>
+        <MovieDetailsList details={additionalDetails} />
       </div>
     </div>
   );
